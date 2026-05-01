@@ -1,12 +1,12 @@
 # Version catalog — single source of truth for every dependency version.
 # Bump versions here, not in build.gradle.kts files.
 [versions]
-kotlin       = "2.2.21"
+kotlin       = "2.3.21"
 teamcity     = "2024.12"
 teamcityPlug = "1.5.6"
-changelog    = "2.2.1"
+changelog    = "2.5.0"
 junit        = "4.13.2"
-mockk        = "1.13.13"
+mockk        = "1.14.9"
 
 [libraries]
 # TeamCity SDK — declared compileOnly; provided at runtime by the host.
