@@ -1,0 +1,27 @@
+# Version catalog — single source of truth for every dependency version.
+# Bump versions here, not in build.gradle.kts files.
+[versions]
+kotlin       = "2.3.21"
+teamcity     = "2024.12"
+teamcityPlug = "1.5.6"
+changelog    = "2.2.1"
+junit        = "4.13.2"
+mockk        = "1.13.13"
+
+[libraries]
+# TeamCity SDK — declared compileOnly; provided at runtime by the host.
+teamcity-server-api = { group = "org.jetbrains.teamcity", name = "server-api",     version.ref = "teamcity" }
+teamcity-server-web = { group = "org.jetbrains.teamcity", name = "server-web-api", version.ref = "teamcity" }
+teamcity-agent-api  = { group = "org.jetbrains.teamcity", name = "agent-api",      version.ref = "teamcity" }
+teamcity-tests      = { group = "org.jetbrains.teamcity", name = "tests-support",  version.ref = "teamcity" }
+
+# Tests
+junit = { group = "junit",    name = "junit", version.ref = "junit" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+
+[plugins]
+kotlin-jvm            = { id = "org.jetbrains.kotlin.jvm",              version.ref = "kotlin"       }
+teamcity-server       = { id = "io.github.rodm.teamcity-server",        version.ref = "teamcityPlug" }
+teamcity-agent        = { id = "io.github.rodm.teamcity-agent",         version.ref = "teamcityPlug" }
+teamcity-environments = { id = "io.github.rodm.teamcity-environments",  version.ref = "teamcityPlug" }
+changelog             = { id = "org.jetbrains.changelog",               version.ref = "changelog"    }

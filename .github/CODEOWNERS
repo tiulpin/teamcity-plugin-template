@@ -1,0 +1,5 @@
+# Default reviewer routing. Replace with your team or user handle, or remove
+# this file entirely if you don't want CODEOWNERS-based review enforcement.
+# Examples:
+#   *  @your-github-handle
+#   *  @YourOrg/your-team

@@ -1,0 +1,58 @@
+# Schema: https://www.jetbrains.com/help/teamcity/yaml-pipeline.html
+version: 1
+
+parameters:
+  java-version: "21"
+
+secrets:
+  marketplace-token: "credentialsJSON:teamcity-plugin-template-marketplace-token"
+
+jobs:
+  build-2024-12:
+    name: "Build & test (TC 2024.12)"
+    runs-on: Linux-Medium
+    parameters:
+      teamcity-version: "2024.12"
+    steps:
+      - type: script
+        name: Build + test
+        script: ./gradlew --no-daemon check serverPlugin -PteamcityVersion=%teamcity-version%
+
+  build-2025-07:
+    name: "Build & test (TC 2025.07)"
+    runs-on: Linux-Medium
+    parameters:
+      teamcity-version: "2025.07"
+    steps:
+      - type: script
+        name: Build + test
+        script: ./gradlew --no-daemon check serverPlugin -PteamcityVersion=%teamcity-version%
+
+  build-2025-11:
+    name: "Build & test (TC 2025.11)"
+    runs-on: Linux-Medium
+    parameters:
+      teamcity-version: "2025.11"
+    steps:
+      - type: script
+        name: Build + test
+        script: ./gradlew --no-daemon check serverPlugin -PteamcityVersion=%teamcity-version%
+    files-publication:
+      - path: "server/build/distributions/*.zip"
+        publish-artifact: true
+        share-with-jobs: true
+
+  publish:
+    name: "Publish to JetBrains Marketplace"
+    runs-on: Linux-Medium
+    dependencies:
+      - build-2025-11:
+          reuse: successful
+          on-failed-dependency: cancel
+    allow-reuse: false
+    steps:
+      - type: script
+        name: Publish plugin
+        script: |
+          export MARKETPLACE_TOKEN="%marketplace-token%"
+          ./gradlew --no-daemon publishPlugin
